@@ -33,7 +33,7 @@ function App() {
 
 
           <Route path="/katalog" element={<Katalog />} />
-          <Route path="/proizvod" element={<Product />} />
+          <Route path="/proizvod/:id" element={<Product />} />
         </Routes>
         <Footer/>
       </BrowserRouter>

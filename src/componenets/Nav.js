@@ -48,6 +48,16 @@ function Nav() {
                 Contact
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/katalog">
+                Katalog
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/tecajnaLista">
+                Tečajna Lista
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

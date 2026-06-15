@@ -15,6 +15,8 @@ import BlogSingle from "./componenets/BlogSingle";
 
 import Katalog from "./pages/Shop/Katalog";
 import Product from "./pages/Shop/Product";
+import TecajnaLista from "./pages/TecajnaLista";
+import ProductTest from "./pages/Shop/ProductTest";
 
 function App() {
   return (
@@ -34,6 +36,9 @@ function App() {
 
           <Route path="/katalog" element={<Katalog />} />
           <Route path="/proizvod/:id" element={<Product />} />
+          <Route path="/proizvodTest/:id" element={<ProductTest />} />
+
+          <Route path="/tecajnaLista" element={<TecajnaLista />} />
         </Routes>
         <Footer/>
       </BrowserRouter>

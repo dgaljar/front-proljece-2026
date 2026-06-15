@@ -1,74 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import KatalogSingle from "./KatalogSingle";
 
-import { ToastContainer, toast, Zoom } from "react-toastify";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
+function ProductTest() {
+  
+    const { id } = useParams();
+    const [proizvod, setProizvod] = useState(null);
 
-/* import all the icons in Free Solid, Free Regular, and Brands styles */
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import { far } from "@fortawesome/free-regular-svg-icons";
-
-library.add(fas, far);
-
-function Product() {
-  const { id } = useParams();
-
-  const [product, setProduct] = useState(null);
-  const [productNumber, setProductNumber] = useState(1);
-  const [active, setActive] = useState("description");
-  const [activeImage, setActiveImage] = useState(null);
-
-  useEffect(() => {
-    fetch(`https://dummyjson.com/products/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setProduct(data);
-        setActiveImage(data.images[0]);
-      });
-  }, [id]);
-
-  if (!product) {
-    return <p>Loading...</p>;
-  }
-
-  const discountedPrice = (
-    product.price -
-    product.price * (product.discountPercentage / 100)
-  ).toFixed(2);
-
-  const renderStars = (rating) => {
-    const stars = [];
-
-    for (let i = 1; i <= 5; i++) {
-      if (i <= Math.floor(rating)) {
-        stars.push(<FontAwesomeIcon icon="fa-solid fa-star" />);
-      } else if (i - 0.5 <= rating) {
-        stars.push(<FontAwesomeIcon icon="fa-solid fa-star-half-stroke" />);
-      } else {
-        stars.push(<FontAwesomeIcon icon="fa-regular fa-star" />);
-      }
+    useEffect(() => {
+        fetch("https://dummyjson.com/products/" + id)
+        .then(rezultat => rezultat.json())
+        .then(podaci => setProizvod(podaci))
+    }, [id])
+    
+    if(!proizvod) {
+        return(
+            <p></p>
+        )
     }
-
-    return stars;
-  };
-
-  const notify = () => {
-    toast.success("Product added to cart!", {
-      position: "bottom-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Zoom,
-    });
-    setProductNumber(1);
-  };
 
   return (
     <section className="single-product">
@@ -77,31 +26,47 @@ function Product() {
           <div className="col-lg-6">
             <div className="position-relative">
               <img
-                src={activeImage}
+                src={proizvod?.images?.[0] || "https://placehold.co/600x600" }
                 className="img-fluid"
                 alt="White Printed Shirt"
               />
             </div>
 
             <div className="row row-cols-4 g-3 mt-1">
-              {product.images.map((image) => {
-                return (
-                  <div className="col">
-                    <img
-                      src={image}
-                      onClick={() => setActiveImage(image)}
-                      className="img-fluid"
-                      alt="Product thumbnail 1"
-                    />
-                  </div>
-                );
-              })}
+              <div className="col">
+                <img
+                  src="https://placehold.co/160x160"
+                  className="img-fluid"
+                  alt="Product thumbnail 1"
+                />
+              </div>
+              <div className="col">
+                <img
+                  src="https://placehold.co/160x160"
+                  className="img-fluid"
+                  alt="Product thumbnail 2"
+                />
+              </div>
+              <div className="col">
+                <img
+                  src="https://placehold.co/160x160"
+                  className="img-fluid"
+                  alt="Product thumbnail 3"
+                />
+              </div>
+              <div className="col">
+                <img
+                  src="https://placehold.co/160x160"
+                  className="img-fluid"
+                  alt="Product thumbnail 4"
+                />
+              </div>
             </div>
           </div>
 
           <div className="col-lg-6">
             <div className="d-flex justify-content-between align-items-start mb-3">
-              <h1 className="h3 mb-0">{product.title}</h1>
+              <h1 className="h3 mb-0">{proizvod.title}</h1>
               <span className="badge rounded-pill text-bg-danger px-3 py-2">
                 SALE
               </span>
@@ -109,22 +74,21 @@ function Product() {
 
             <div className="d-flex align-items-center gap-2 mb-3">
               <span className="display-6 fw-semibold mb-0 lh-1">
-                €{discountedPrice}
+                €{proizvod.price}
               </span>
-              <del className="text-muted">€{product.price}</del>
+              <del className="text-muted">€{proizvod.price}</del>
             </div>
 
             <div className="d-flex align-items-center gap-2 mb-4">
               <span className="text-warning small">
-                {renderStars(product.rating)}
-                {product.rating}
+                {proizvod.rating}
               </span>
               <small className="text-muted">
-                ({product.reviews.length} reviews)
+                (length reviews)
               </small>
             </div>
 
-            <p className="text-muted mb-4">{product.description}</p>
+            <p className="text-muted mb-4">description</p>
 
             <div className="row g-3 mb-3">
               <div className="col-sm-5">
@@ -141,44 +105,26 @@ function Product() {
                 <button
                   className="btn btn-outline-secondary"
                   type="button"
-                  onClick={() => setProductNumber(productNumber - 1)}
-                  disabled={productNumber === 1}
+           
                 >
                   -
                 </button>
                 <input
                   type="text"
                   className="form-control text-center"
-                  value={productNumber}
+                  value="number"
                 />
                 <button
                   className="btn btn-outline-secondary"
                   type="button"
-                  onClick={() => setProductNumber(productNumber + 1)}
                 >
                   +
                 </button>
               </div>
 
-              <button
-                className="btn btn-dark px-4 text-uppercase"
-                onClick={notify}
-              >
+              <button className="btn btn-dark px-4 text-uppercase">
                 Add to cart
               </button>
-              <ToastContainer
-                position="bottom-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Zoom}
-              />
             </div>
 
             <hr className="my-4" />
@@ -197,15 +143,13 @@ function Product() {
             <div className="small">
               <p className="mb-3">
                 <span className="fw-semibold d-block mb-1">Category</span>
-                <span className="text-muted">{product.category}</span>
+                <span className="text-muted">category</span>
               </p>
 
               <p className="mb-0">
                 <span className="fw-semibold d-block mb-1">Tags</span>
                 <span className="text-muted">
-                  {product.tags.map((tag) => (
-                    <span key={tag}>{tag} </span>
-                  ))}
+                  tags
                 </span>
               </p>
             </div>
@@ -216,8 +160,8 @@ function Product() {
           <ul className="nav nav-tabs" id="productTabs" role="tablist">
             <li className="nav-item" role="presentation">
               <button
-                className={`nav-link ${active === "description" ? "active" : ""}`}
-                onClick={() => setActive("description")}
+                className="nav-link active"
+        
                 id="description-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#description"
@@ -229,8 +173,7 @@ function Product() {
             </li>
             <li className="nav-item" role="presentation">
               <button
-                className={`nav-link ${active === "additional" ? "active" : ""}`}
-                onClick={() => setActive("additional")}
+                className="nav-link"
                 id="additional-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#additional"
@@ -242,15 +185,14 @@ function Product() {
             </li>
             <li className="nav-item" role="presentation">
               <button
-                className={`nav-link ${active === "reviews" ? "active" : ""}`}
-                onClick={() => setActive("reviews")}
+                className="nav-link"
                 id="reviews-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#reviews"
                 type="button"
                 role="tab"
               >
-                Reviews ({product.reviews.length})
+                Reviews (length)
               </button>
             </li>
           </ul>
@@ -260,16 +202,16 @@ function Product() {
             id="productTabsContent"
           >
             <div
-              className={`tab-pane fade show ${active === "description" ? "active" : ""}`}
+              className="tab-pane fade show active"
               id="description"
               role="tabpanel"
               aria-labelledby="description-tab"
             >
-              <p className="text-muted mb-0 small">{product.description}</p>
+              <p className="text-muted mb-0 small">description</p>
             </div>
 
             <div
-              className={`tab-pane fade show ${active === "additional" ? "active" : ""}`}
+              className="tab-pane fade"
               id="additional"
               role="tabpanel"
               aria-labelledby="additional-tab"
@@ -281,25 +223,24 @@ function Product() {
             </div>
 
             <div
-              className={`tab-pane fade show ${active === "reviews" ? "active" : ""}`}
+              className="tab-pane fade"
               id="reviews"
               role="tabpanel"
               aria-labelledby="reviews-tab"
             >
-              {product.reviews.map((review) => {
-                return (
+            
                   <div className="card p-3 mb-2">
-                    <h4 className="card-title">{review.reviewerName}</h4>
-                    <p className="card-text">{review.comment}</p>
+                    <h4 className="card-title">name</h4>
+                    <p className="card-text">comment</p>
                     <span className="text-warning">
-                      Rating: {review.rating}
+                      Rating: rating
                     </span>
                     <span className="text-muted">
-                      {new Date(review.date).toLocaleString("hr-HR")}
+                      date
                     </span>
                   </div>
-                );
-              })}
+             
+         
             </div>
           </div>
         </div>
@@ -319,4 +260,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default ProductTest;

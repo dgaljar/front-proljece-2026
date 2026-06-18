@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { data, useParams } from "react-router";
 import KatalogSingle from "./KatalogSingle";
 
 import { ToastContainer, toast, Zoom } from "react-toastify";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from 'swiper/modules';
+import 'swiper/css/navigation';
+import "swiper/css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -17,6 +22,7 @@ function Product() {
   const { id } = useParams();
 
   const [product, setProduct] = useState(null);
+  const [products, setProducts] = useState([]);
   const [productNumber, setProductNumber] = useState(1);
   const [active, setActive] = useState("description");
   const [activeImage, setActiveImage] = useState(null);
@@ -29,6 +35,16 @@ function Product() {
         setActiveImage(data.images[0]);
       });
   }, [id]);
+
+  useEffect(() => {
+    if (!product) return;
+
+    fetch(`https://dummyjson.com/products/category/${product.category}`)
+      .then((res) => res.json())
+      .then((data) => setProducts(data.products));
+  }, [product]);
+
+  console.log(products);
 
   if (!product) {
     return <p>Loading...</p>;
@@ -288,7 +304,7 @@ function Product() {
             >
               {product.reviews.map((review) => {
                 return (
-                  <div className="card p-3 mb-2">
+                  <div className="card p-3 mb-2" key={review.date}>
                     <h4 className="card-title">{review.reviewerName}</h4>
                     <p className="card-text">{review.comment}</p>
                     <span className="text-warning">
@@ -307,12 +323,28 @@ function Product() {
         <div className="mt-5">
           <h2 className="h4 mb-4">Related Products</h2>
 
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
-            {/* <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle /> */}
-          </div>
+          <Swiper
+            modules={[Navigation]}
+            navigation
+            spaceBetween={50}
+            slidesPerView={1}
+            breakpoints={{
+              576: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
+              992: { slidesPerView: 4 },
+            }}
+            loop={true}
+            onSlideChange={() => console.log("slide change")}
+            onSwiper={(swiper) => console.log(swiper)}
+          >
+            {products.map((product) => {
+              return (
+                <SwiperSlide key={product.id}>
+                  <KatalogSingle product={product} />
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
         </div>
       </div>
     </section>

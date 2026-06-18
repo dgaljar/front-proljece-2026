@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-function KatalogSingle({product}) {
+function KatalogSingle({product, klasa = ""}) {
 
 
 
   return (
-    <div className="col-md-3 stil-1">
+    <div className={`${klasa} stil-1`}>
         <div className="article">
             <Link to={`/proizvod/${product.id}`} className="image">
                 <img src={product.thumbnail} alt={product.title} />

@@ -1,20 +1,21 @@
 import React from 'react'
+import { Link } from 'react-router'
 
-function KatalogSingle() {
+function KatalogSingle({product, klasa = ""}) {
 
 
 
   return (
-    <div className="col-md-3 stil-1">
-        <div class="article">
-            <a href="#" class="image">
-                <img src="https://placehold.co/400x400" />
-            </a>
-            <p class="subtitle">Ne može vjerovati</p>
+    <div className={`${klasa} stil-1`}>
+        <div className="article">
+            <Link to={`/proizvod/${product.id}`} className="image">
+                <img src={product.thumbnail} alt={product.title} />
+            </Link>
+            <p className="subtitle">{product.title}</p>
             <h2>
-                <a href="#">
-                    Zanosna voditeljica za kojom svi luduju posjetila Hrvatsku pa ostala bez teksta, evo i zašto
-                </a>
+                <Link to={"/proizvod/" + product.id}>
+                    {product.description}
+                </Link>
             </h2>
             <a href="#" className="btn btn-default d-block mt-3 mb-5">Dodaj u košaricu</a>
         </div>

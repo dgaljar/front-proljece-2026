@@ -12,6 +12,7 @@ body{
     */
 }
 
+
 a, .recent-post .box a{
     text-decoration: none;
     color: #21243D;
@@ -23,10 +24,6 @@ img{
 
 .border-radius{
     border-radius: 16px;
-}
-
-.bg-blue{
-    background-color: #EDF7FA;
 }
 
 .hero{

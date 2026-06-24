@@ -1,27 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import KatalogSingle from './KatalogSingle'
 
 function Katalog() {
 
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch("https://dummyjson.com/products")
+    .then(res => res.json())
+    .then(data => setProducts(data.products))
+  }, [])
+
+  console.log(products)
+
   return (
     <section className="katalog container py-5">
         <div className="row">
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
-            <KatalogSingle />
+          {
+            products.map(product => {
+              return (
+                <KatalogSingle key={product.id} product={product} />
+              )
+            })
+          }
         </div>
     </section>
   )

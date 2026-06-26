@@ -72,7 +72,6 @@ function Kontakt() {
         </div>
 
         <div className="col-md-7 form-right">
-
           {/*
           name prebacen sa labela na input.
           content email templatea mozemo uređivati html-om i inline css-om, a varijable dodajemo kao {{first_name}}
@@ -87,25 +86,30 @@ function Kontakt() {
           <form ref={form} onSubmit={sendEmail}>
             <div className="row g-5">
               <div className="col-md-6">
-                <label htmlFor="" >FirstName</label>
-                <input type="text"name="first_name" />
-                <label htmlFor="" >Email</label>
+                <label htmlFor="">FirstName</label>
+                <input type="text" name="first_name" />
+              </div>
+              
+              <div className="col-md-6">
+                <label htmlFor="">Last Name</label>
+                <input type="text" name="last_name" />
+              </div>
+
+              <div className="col-md-6">
+                <label htmlFor="">Email</label>
                 <input type="email" name="email" />
               </div>
 
               <div className="col-md-6">
-                <label htmlFor="" >Last Name</label>
-                <input type="text" name="last_name" />
-                <label htmlFor="" >Phone Number</label>
+                <label htmlFor="">Phone Number</label>
                 <input type="text" name="phone_number" />
               </div>
 
               <div className="col-md-12">
-                <label htmlFor="" >Message</label>
+                <label htmlFor="">Message</label>
                 <input type="text" name="message" />
               </div>
-
-              <button className="form-button" type="submit">
+              <button className="form-button ms-auto" type="submit">
                 Send Message
               </button>
             </div>

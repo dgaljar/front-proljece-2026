@@ -19,7 +19,7 @@ function Katalog() {
           {
             products.map(product => {
               return (
-                <KatalogSingle key={product.id} product={product} />
+                <KatalogSingle key={product.id} product={product} klasa={"col-md-3"}/>
               )
             })
           }

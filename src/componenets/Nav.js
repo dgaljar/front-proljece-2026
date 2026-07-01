@@ -1,6 +1,16 @@
-import { Link } from "react-router";
+import {  faSignIn, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
+import { Link, useLocation } from "react-router";
 
 function Nav() {
+  const location = useLocation();
+
+  if(location.pathname === "/sign-in" || location.pathname === "/sign-up") {
+    return;
+  }
+
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container">
@@ -59,6 +69,16 @@ function Nav() {
               </Link>
             </li>
           </ul>
+
+        <div className="d-flex gap-3 ms-md-4">
+          <Link to="/sign-in">
+            <FontAwesomeIcon icon={faSignIn} />
+          </Link>
+          <Link to="/sign-up">
+            <FontAwesomeIcon icon={faUserPlus} />
+          </Link>
+        </div>
+      
         </div>
       </div>
     </nav>

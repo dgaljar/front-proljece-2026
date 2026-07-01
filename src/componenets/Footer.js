@@ -1,4 +1,12 @@
+import { useLocation } from "react-router";
+
 function Footer() {
+  const location = useLocation();
+
+  if(location.pathname === "/sign-in" || location.pathname === "/sign-up") {
+    return;
+  }
+
   return (
     <footer className="container text-center">
       <div className="social-icons">

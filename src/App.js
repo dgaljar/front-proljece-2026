@@ -17,6 +17,8 @@ import Katalog from "./pages/Shop/Katalog";
 import Product from "./pages/Shop/Product";
 import TecajnaLista from "./pages/TecajnaLista";
 import ProductTest from "./pages/Shop/ProductTest";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
@@ -30,6 +32,9 @@ function App() {
           <Route path="/blog" element={<Blog/>} />
           <Route path="/blog/:slug" element={<BlogSingle />} />
           <Route path="/kontakt" element={<Kontakt/>} />
+
+          <Route path="/sign-in" element={<SignIn/>} />
+          <Route path="/sign-up" element={<SignUp/>} />
 
 
 

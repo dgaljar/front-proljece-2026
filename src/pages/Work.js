@@ -1,60 +1,41 @@
-import React from 'react'
-import {Link} from 'react-router'
+import React, { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
+import { Link } from "react-router";
 
 function Work() {
+
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        fetch("https://front3.edukacija.online/backend/wp-json/wp/v2/work")
+            .then((res) => res.json())
+            .then((data) => setPosts(data));
+    }, []);
+
+    if (!posts) return <p>Učitavanje</p>;
+
   return (
-    <div class="container pt-5">
+    <div className="container pt-5">
       <h1>Works</h1>
-    <div class="articles pt-4 pb-5 mb-4">
-                
-                <div class="work">
-                    <div class="row">
-                        <div class="col-md-3">
+    <div className="articles pt-4 pb-5 mb-4">
+                {posts.map((post) => {
+                    return(
+                <div className="work">
+                    <div className="row">
+                        <div className="col-md-3">
                             <Link to="/blogSingle"><img src="https://front3.edukacija.online/tsuk/img/work1.png" alt="work1" /></Link>
                         </div>
-                        <div class="col-md-9">
-                            <h2><Link to="/blogSingle">Designing Dashboards</Link></h2>
-                            <p class="meta">
-                                <span class="year">2020</span>
-                                <span class="categories">Design, Pattern</span>
+                        <div className="col-md-9">
+                            <h2><Link to="/blogSingle">{post.title.rendered}</Link></h2>
+                            <p className="meta">
+                                <span className="year">{new Date(post.date).toLocaleDateString("hr-HR")}</span>
+                                <span className="categories">Design, Pattern</span>
                             </p>
-                            <p>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                            <div dangerouslySetInnerHTML={{__html: post.excerpt.rendered}} />
                         </div>
                     </div>
                 </div>
-
-                <div class="work">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <Link to="/blogSingle"><img src="https://front3.edukacija.online/tsuk/img/work2.png" alt="work2" /></Link>
-                        </div>
-                        <div class="col-md-9">
-                            <h2><Link to="/blogSingle">Designing Dashboards</Link></h2>
-                            <p class="meta">
-                                <span class="year">2020</span>
-                                <span class="categories">Design, Pattern</span>
-                            </p>
-                            <p>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="work">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <Link to="/blogSingle"><img src="https://front3.edukacija.online/tsuk/img/work3.png" alt="work3" /></Link>
-                        </div>
-                        <div class="col-md-9">
-                            <h2><Link to="/blogSingle">Designing Dashboards</Link></h2>
-                            <p class="meta">
-                                <span class="year">2020</span>
-                                <span class="categories">Design, Pattern</span>
-                            </p>
-                            <p>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
-                        </div>
-                    </div>
-                </div>
-                
+                );})}
             </div>
             
     </div>
